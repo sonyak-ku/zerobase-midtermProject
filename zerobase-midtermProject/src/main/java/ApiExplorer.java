@@ -1,10 +1,14 @@
 /* Java 1.8 샘플 코드 */
 import java.io.InputStreamReader;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class ApiExplorer {
 	public static void main(String[] args) throws IOException {
@@ -34,12 +38,18 @@ public class ApiExplorer {
 		}
 		//StringBuilder sb = new StringBuilder();
 		//String line;
-		System.out.println(rd.readLine());
+		
 //		while ((line = rd.readLine()) != null) {
 //				System.out.println(line);
 //		}
+	
+		//System.out.println(sb.toString());
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(rd.readLine());
 		rd.close();
 		conn.disconnect();
-		//System.out.println(sb.toString());
+		
+		System.out.println(jsonStr);
 	}
 }
