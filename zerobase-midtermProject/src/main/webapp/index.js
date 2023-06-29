@@ -5,7 +5,7 @@ function getCurrentPosition() {
 	if (navigator.geolocation) { // GPS를 지원하면
 		navigator.geolocation.getCurrentPosition(function(position) {
 			document.getElementById("LAT").value = position.coords.latitude;
-			document.getElementById("LNG").value = position.coords.longitude;
+			document.getElementById("LNT").value = position.coords.longitude;
 			
 		}, function(error) {
 			console.error(error);

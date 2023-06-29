@@ -19,20 +19,22 @@ label {
 <body>
 	<h1>와이파이 정보 구하기</h1>
 	<div>
-		<a href="">홈</a> | <a href="">위치 히스토리 목록</a> | <a href="insertWifiResult.html">Open API
-			와이파이 정보 가져오기</a>
+		<a href="">홈</a> | <a href="">위치 히스토리 목록</a> | <a
+			href="getWifiResult.jsp">Open API 와이파이 정보 가져오기</a>
 	</div>
 	<form action="" method="get" class="form-example">
-		<label for="name">LAT: </label> <input type="text"
-			name="LAT" id="LAT" value="" required>
-		<label for="email">LNG: </label> <input type="email"
-			name="LNG" id="LNG" value="" required>
+		<label for="LAT">LAT: </label>
+		 <input type="text" name="LAT" id="LAT"
+			value="" required> 
+		<label for="LNT">LNT: </label> 
+		<input
+			type="text" name="LNT" id="LNT" value="" required>
 		<button onClick="getCurrentPosition()">내 위치 가져오기</button>
 		<input type="submit" value="근처 WIFI 정보 보기">
 	</form>
-	<%
-	out.print("hello, this is java");
-	%>
+
+	
+
 </body>
 
 </html>
