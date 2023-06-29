@@ -16,27 +16,22 @@ public class ApiExplorer {
 	private static final String KEY = "48636d6f676b63683437774856534a";
 	private static final String URL = "http://openapi.seoul.go.kr:8088";
 	private static final String SERVICE = "TbPublicWifiInfo"; 
-	public String from = "1";
-	public String to = "1";
 	public String type = "json";
 	
 	public ApiExplorer() {}
-	
-	public ApiExplorer(int from, int to) {
-		this.from = String.valueOf(from);
-		this.to = String.valueOf(to);
-	}
 	
 	public void setType(String type) {
 		this.type = type;
 	}
 	
-	public String getApi(){
+	public String getApi(int f, int t){
 		StringBuilder urlBuilder = new StringBuilder(URL); /*URL*/
 		URL url = null;
 		HttpURLConnection conn = null;
 		BufferedReader rd = null;
 		String apiString = "";
+		String from = String.valueOf(f);
+		String to = String.valueOf(t);
 		
 		try {
 			urlBuilder.append("/" +  URLEncoder.encode(KEY,"UTF-8") );
