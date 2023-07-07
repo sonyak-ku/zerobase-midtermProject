@@ -83,12 +83,11 @@ public class WifiService {
 
 	}
 
-	public void dbInsert(String title, String body, String author) {
+	public void dbInsert(WifiDTO dto) {
 		// 1. 드라이버로드
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
-
 			e.printStackTrace();
 		}
 		// 2. 커넥션 객체 생성
@@ -101,13 +100,29 @@ public class WifiService {
 			// 3. 스테이트먼트 객체 생성
 			statement = con.createStatement();
 
-			String sql = " insert into topic (title, body, author_name)\r\n " + " values (?, ?, ?) ";
-
+			String sql = " insert into insertTestTable "
+			+ " (X_SWIFI_MGR_NO, X_SWIFI_WRDOFC, X_SWIFI_MAIN_NM, X_SWIFI_ADRES1, X_SWIFI_ADRES2, X_SWIFI_INSTL_FLOOR , X_SWIFI_INSTL_TY"
+			+ ", X_SWIFI_INSTL_MBY, X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, X_SWIFI_REMARS3, LAT, LNG, WORK_DTTM)\r\n " 
+			+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+			
 			// 4. 쿼리실행
 			PreparedStatement preparedStatement = con.prepareStatement(sql);
-			preparedStatement.setString(1, title);
-			preparedStatement.setString(2, body);
-			preparedStatement.setString(3, author);
+			preparedStatement.setString(1, dto.get관리번호());
+			preparedStatement.setString(2, dto.get자치구());
+			preparedStatement.setString(3, dto.get와이파이명());
+			preparedStatement.setString(4, dto.get도로명());
+			preparedStatement.setString(5, dto.get상세주소());
+			preparedStatement.setString(6, dto.get설치위치());
+			preparedStatement.setString(7, dto.get설치유형());
+			preparedStatement.setString(8, dto.get설치기관());
+			preparedStatement.setString(9, dto.get서비스구분());
+			preparedStatement.setString(10, dto.get망종류());
+			preparedStatement.setString(11, dto.get설치년도());
+			preparedStatement.setString(12, dto.get실내구분());
+			preparedStatement.setString(13, dto.get와이파이명());
+			preparedStatement.setString(14, dto.getLAT_Y());
+			preparedStatement.setString(15, dto.getLNT_X());
+			preparedStatement.setString(16, dto.get작업일자());
 
 			// 5. 결과 수행
 			int affectedRows = preparedStatement.executeUpdate();
@@ -122,7 +137,6 @@ public class WifiService {
 			e.printStackTrace();
 		} finally {
 			// 6. 객체 연결 해제
-
 			try {
 				if (statement != null && !statement.isClosed()) {
 					statement.close();
@@ -156,7 +170,6 @@ public class WifiService {
 				// 2. 커넥션 객체 생성
 				Connection con = null;
 				java.sql.Statement statement = null;
-				
 				
 				try {
 					con = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
