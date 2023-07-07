@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import db.DbTest;
 
@@ -83,7 +84,7 @@ public class WifiService {
 
 	}
 
-	public void dbInsert(WifiDTO dto) {
+	public void dbInsert(List<List<WifiDTO>> list) {
 		// 1. 드라이버로드
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -105,35 +106,38 @@ public class WifiService {
 			+ ", X_SWIFI_INSTL_MBY, X_SWIFI_SVC_SE, X_SWIFI_CMCWR, X_SWIFI_CNSTC_YEAR, X_SWIFI_INOUT_DOOR, X_SWIFI_REMARS3, LAT, LNG, WORK_DTTM)\r\n " 
 			+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 			
-			// 4. 쿼리실행
-			PreparedStatement preparedStatement = con.prepareStatement(sql);
-			preparedStatement.setString(1, dto.get관리번호());
-			preparedStatement.setString(2, dto.get자치구());
-			preparedStatement.setString(3, dto.get와이파이명());
-			preparedStatement.setString(4, dto.get도로명());
-			preparedStatement.setString(5, dto.get상세주소());
-			preparedStatement.setString(6, dto.get설치위치());
-			preparedStatement.setString(7, dto.get설치유형());
-			preparedStatement.setString(8, dto.get설치기관());
-			preparedStatement.setString(9, dto.get서비스구분());
-			preparedStatement.setString(10, dto.get망종류());
-			preparedStatement.setString(11, dto.get설치년도());
-			preparedStatement.setString(12, dto.get실내구분());
-			preparedStatement.setString(13, dto.get와이파이명());
-			preparedStatement.setString(14, dto.getLAT_Y());
-			preparedStatement.setString(15, dto.getLNT_X());
-			preparedStatement.setString(16, dto.get작업일자());
-
-			// 5. 결과 수행
-			int affectedRows = preparedStatement.executeUpdate();
-			if (affectedRows > 0) {
-				System.out.println("저장 성공");
-			} else {
-				System.out.println("저장 실패");
+			for (List<WifiDTO> dtoList : list) {
+				for (WifiDTO dto : dtoList) {
+					// 4. 쿼리실행
+					PreparedStatement preparedStatement = con.prepareStatement(sql);
+					preparedStatement.setString(1, dto.get관리번호());
+					preparedStatement.setString(2, dto.get자치구());
+					preparedStatement.setString(3, dto.get와이파이명());
+					preparedStatement.setString(4, dto.get도로명());
+					preparedStatement.setString(5, dto.get상세주소());
+					preparedStatement.setString(6, dto.get설치위치());
+					preparedStatement.setString(7, dto.get설치유형());
+					preparedStatement.setString(8, dto.get설치기관());
+					preparedStatement.setString(9, dto.get서비스구분());
+					preparedStatement.setString(10, dto.get망종류());
+					preparedStatement.setString(11, dto.get설치년도());
+					preparedStatement.setString(12, dto.get실내구분());
+					preparedStatement.setString(13, dto.get와이파이명());
+					preparedStatement.setString(14, dto.getLAT_Y());
+					preparedStatement.setString(15, dto.getLNT_X());
+					preparedStatement.setString(16, dto.get작업일자());
+					
+					// 5. 결과 수행
+					int affectedRows = preparedStatement.executeUpdate();
+					if (affectedRows > 0) {
+						System.out.println("저장 성공");
+					} else {
+						System.out.println("저장 실패");
+					}
+				}
 			}
-
+			
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			// 6. 객체 연결 해제

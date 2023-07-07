@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.WifiDTO"%>
 <%@page import="dto.WifiService"%>
@@ -21,19 +22,19 @@
 		String api = apiExplorer.getApi(1, 1);
 		int limit = jsonParser.getTotalCount(api);
 		
-		// wifiDTO list 받아서 DB 에 저장하기
+		// wifiDTO list 받아서
 		int start = 1, end = 20;
 		
+		List<List<WifiDTO>> list = new ArrayList<>();
 		while (start < limit) {
 			String t = apiExplorer.getApi(start, end);
 			start += 20;
 			end += 20;
-			List<WifiDTO> list = jsonParser.parseJsonTOWifiDTO(t);
-			
-			for (WifiDTO wifi : list) {
-				wifiService.dbInsert(wifi);
-			}
+			list.add(jsonParser.parseJsonTOWifiDTO(t));
 		}	
+		
+		// Db 에 데이터 저장
+		wifiService.dbInsert(list);
 	%>
 	<p> <%=limit%>개의 WIFI 정보를 정상적으로 저장하였습니다.</p>
 	<a href="index.jsp">내 위치 가져오기</a>
